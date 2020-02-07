@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Path of Exile Ladders</string>
+    <string name="metamorph_hardcore_string">Metamorph Hardcore</string>
+    <string name="metamorph_standard_string">Metamorph Standard</string>
+    <string name="ladder_item_image_description">Icon-Name</string>
+    <string name="ladder_item_name">Chuba_BoomberGang</string>
+    <string name="ladder_item_level">Level 100</string>
+    <string name="ladder_item_rank">100</string>
+</resources>

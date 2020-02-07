@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.m335_poe_ladders.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@android:color/holo_blue_dark">
+
+        <TextView
+            android:id="@+id/metamorph_standard"
+            style="@style/LeagueStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/metamorph_standard_string" />
+
+        <ImageView
+            android:id="@+id/metamorph_standard_arrow"
+            style="@style/ArrowStyle"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/arrow_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@android:color/holo_red_dark">
+
+        <TextView
+            android:id="@+id/metamorph_hardcore"
+            style="@style/LeagueStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/metamorph_hardcore_string" />
+
+        <ImageView
+            android:id="@+id/metamorph_hardcore_arrow"
+            style="@style/ArrowStyle"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/arrow_right" />
+
+    </RelativeLayout>
+
+</LinearLayout>

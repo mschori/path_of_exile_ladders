@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/image"
+        style="@style/LadderItemImage"
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_toEndOf="@id/rank"
+        android:contentDescription="@string/ladder_item_image_description"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/LadderItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_toEndOf="@id/image"
+        android:text="@string/ladder_item_name" />
+
+    <TextView
+        android:id="@+id/level"
+        style="@style/LadderItemLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/name"
+        android:layout_toEndOf="@id/image"
+        android:text="@string/ladder_item_level" />
+
+    <TextView
+        android:id="@+id/rank"
+        style="@style/LadderItemRank"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:text="@string/ladder_item_rank" />
+</RelativeLayout>
