@@ -6,12 +6,16 @@ import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 
@@ -21,6 +25,7 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
     private String jsonUrl;
     private LadderAdapter ladderAdapter;
 
+    private SwipeRefreshLayout swipeContainer;
     private ListView list;
     private TextView emptyList;
     private ProgressBar progressBar;
@@ -38,21 +43,65 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ladder);
 
+        // Get league-info from main-activity then set title and url based on this league-info
         Bundle bundle = getIntent().getExtras();
         String league = bundle.getString("league");
         this.setTitleAndUrl(league);
-
         setTitle(this.viewTitle);
 
+        // Initialise all views and containers
+        this.swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         this.list = (ListView) findViewById(R.id.list);
         this.emptyList = (TextView) findViewById(R.id.empty_view);
         this.progressBar = (ProgressBar) findViewById(R.id.loading_indicator);
 
+        // Configure swipeContainer
+        this.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(getApplicationContext(), "Reloading ladders", Toast.LENGTH_LONG).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeContainer.setRefreshing(false);
+                        startLoader();
+                    }
+                }, 2000);
+            }
+        });
+
+        // Add scroll-listener. Needed for scroll-down fix.
+        this.list.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (list.getChildAt(0) != null) {
+                    swipeContainer.setEnabled(list.getFirstVisiblePosition() == 0 && list.getChildAt(0).getTop() == 0);
+                }
+            }
+        });
+
+        // Add empty-view to list-view
         this.list.setEmptyView(this.emptyList);
 
+        // Add adapter
         this.ladderAdapter = new LadderAdapter(this, new ArrayList<Ladder>());
         this.list.setAdapter(this.ladderAdapter);
 
+        // Start loader
+        startLoader();
+    }
+
+    /**
+     * Starting Loader.
+     * Get ladder-information and display.
+     */
+    public void startLoader() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
