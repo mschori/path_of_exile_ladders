@@ -2,9 +2,11 @@ package com.example.m335_poe_ladders;
 
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -12,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 
 public class LadderActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Ladder>> {
 
+    private final String poeProfileUrl = "https://www.pathofexile.com/account/view-profile/";
     private String viewTitle;
     private String jsonUrl;
     private Integer amountOfChars;
@@ -97,6 +101,17 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
+        // Add click-listener for items
+        this.list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Ladder item = (Ladder) parent.getItemAtPosition(position);
+                String characterUrl = poeProfileUrl + item.getAccountName() + "/characters?characterName=" + item.getName();
+                Intent i = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(characterUrl));
+                startActivity(i);
+            }
+        });
+
         // Add empty-view to list-view
         this.list.setEmptyView(this.emptyList);
 
@@ -153,7 +168,7 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
         if (networkInfo != null && networkInfo.isConnected()) {
             this.loaderManager.initLoader(1, null, this);
         } else {
-            this.showError("No internet-connection");
+            this.showEmptyMessage("No internet-connection");
         }
     }
 
@@ -173,7 +188,7 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
         if (networkInfo != null && networkInfo.isConnected()) {
             this.loaderManager.restartLoader(1, null, this);
         } else {
-            this.showError("No internet-connection");
+            this.showEmptyMessage("No internet-connection");
         }
     }
 
@@ -209,7 +224,7 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
     /**
      * Display error.
      */
-    private void showError(String message) {
+    private void showEmptyMessage(String message) {
         this.progressBar.setVisibility(View.GONE);
         this.emptyList.setText(message);
     }

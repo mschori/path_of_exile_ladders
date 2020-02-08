@@ -2,7 +2,7 @@
     <string name="app_name">Path of Exile Ladders</string>
     <string name="metamorph_hardcore_string">Metamorph Hardcore</string>
     <string name="metamorph_standard_string">Metamorph Standard</string>
-    <string name="ladder_item_image_description">Icon-Name</string>
+    <string name="image_description_iconName">Icon-Name</string>
     <string name="ladder_item_name">Chuba_BoomberGang</string>
     <string name="ladder_item_level">Level 100</string>
     <string name="ladder_item_rank">100</string>
@@ -11,4 +11,5 @@
     <string name="options_show_first_150_characters">Show first 150 Exiles</string>
     <string name="options_show_first_200_characters">Show first 200 Exiles</string>
     <string name="no_exiles_found">No Exiles found.</string>
+    <string name="image_description_goArrow">goArrow</string>
 </resources>

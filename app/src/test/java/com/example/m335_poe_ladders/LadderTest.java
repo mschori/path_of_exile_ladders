@@ -11,7 +11,7 @@ public class LadderTest {
 
     @Before
     public void setUp() throws Exception {
-        this.SUT = new Ladder("Michael", 50, 33, 42);
+        this.SUT = new Ladder("Michael", 50, 33, 42, "MyAccount");
     }
 
     @Test
@@ -21,5 +21,6 @@ public class LadderTest {
         assertEquals(new Integer(50), SUT.getRank());
         assertEquals(new Integer(33), SUT.getLevel());
         assertEquals(new Integer(42), SUT.getImageId());
+        assertEquals("MyAccount", SUT.getAccountName());
     }
 }

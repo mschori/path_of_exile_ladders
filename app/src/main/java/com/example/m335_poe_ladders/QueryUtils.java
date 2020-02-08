@@ -85,15 +85,17 @@ public class QueryUtils {
             for (int x = 0; x < entries.length(); x++) {
                 JSONObject ladderItem = entries.getJSONObject(x);
                 JSONObject character = ladderItem.getJSONObject("character");
+                JSONObject account = ladderItem.getJSONObject("account");
 
                 Integer rank = ladderItem.getInt("rank");
                 String name = character.getString("name");
                 Integer level = character.getInt("level");
                 String classInfo = character.getString("class");
                 Integer imageId = this.imageService.getImageId(classInfo);
+                String accountName = account.getString("name");
 
                 // Create ladderItem and add to ladderItem-list
-                Ladder ladderObject = new Ladder(name, rank, level, imageId);
+                Ladder ladderObject = new Ladder(name, rank, level, imageId, accountName);
                 ladders.add(ladderObject);
             }
         } catch (JSONException e) {
