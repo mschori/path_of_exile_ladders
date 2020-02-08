@@ -24,6 +24,7 @@
             style="@style/ArrowStyle"
             android:layout_width="30dp"
             android:layout_height="match_parent"
+            android:contentDescription="@string/image_description_goArrow"
             app:srcCompat="@drawable/arrow_right" />
 
     </RelativeLayout>
@@ -45,6 +46,7 @@
             style="@style/ArrowStyle"
             android:layout_width="30dp"
             android:layout_height="match_parent"
+            android:contentDescription="@string/image_description_goArrow"
             app:srcCompat="@drawable/arrow_right" />
 
     </RelativeLayout>

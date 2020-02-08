@@ -13,7 +13,7 @@
         android:layout_width="65dp"
         android:layout_height="55dp"
         android:layout_toEndOf="@id/rank"
-        android:contentDescription="@string/ladder_item_image_description"
+        android:contentDescription="@string/image_description_iconName"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
