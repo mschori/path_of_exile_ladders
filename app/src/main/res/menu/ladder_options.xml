@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/show_50_chars"
+        android:title="@string/options_show_first_50_characters" />
+    <item
+        android:id="@+id/show_100_chars"
+        android:title="@string/options_show_first_100_characters" />
+    <item
+        android:id="@+id/show_150_chars"
+        android:title="@string/options_show_first_150_characters" />
+    <item
+        android:id="@+id/show_200_chars"
+        android:title="@string/options_show_first_200_characters" />
+
+</menu>

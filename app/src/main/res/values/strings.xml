@@ -6,4 +6,9 @@
     <string name="ladder_item_name">Chuba_BoomberGang</string>
     <string name="ladder_item_level">Level 100</string>
     <string name="ladder_item_rank">100</string>
+    <string name="options_show_first_50_characters">Show first 50 Exiles</string>
+    <string name="options_show_first_100_characters">Show first 100 Exiles</string>
+    <string name="options_show_first_150_characters">Show first 150 Exiles</string>
+    <string name="options_show_first_200_characters">Show first 200 Exiles</string>
+    <string name="no_exiles_found">No Exiles found.</string>
 </resources>

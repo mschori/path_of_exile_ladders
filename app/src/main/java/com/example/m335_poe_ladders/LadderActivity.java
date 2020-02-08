@@ -7,6 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -14,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -23,7 +27,11 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
 
     private String viewTitle;
     private String jsonUrl;
+    private Integer amountOfChars;
     private LadderAdapter ladderAdapter;
+    private ConnectivityManager connMgr;
+    private LoaderManager loaderManager;
+    private Toast toast;
 
     private SwipeRefreshLayout swipeContainer;
     private ListView list;
@@ -40,6 +48,7 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ladder);
 
@@ -49,25 +58,27 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
         this.setTitleAndUrl(league);
         setTitle(this.viewTitle);
 
-        // Initialise all views and containers
+        // Initialise all properties
+        this.amountOfChars = 50;
+        this.connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        this.loaderManager = getLoaderManager();
+        this.toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         this.swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         this.list = (ListView) findViewById(R.id.list);
         this.emptyList = (TextView) findViewById(R.id.empty_view);
         this.progressBar = (ProgressBar) findViewById(R.id.loading_indicator);
 
-        // Configure swipeContainer
+        // Configure swipeContainer -> delay of 200 milliseconds for user-experience
         this.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(getApplicationContext(), "Reloading ladders", Toast.LENGTH_LONG).show();
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         swipeContainer.setRefreshing(false);
-                        startLoader();
+                        restartLoader();
                     }
-                }, 2000);
+                }, 200);
             }
         });
 
@@ -97,18 +108,70 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
         startLoader();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.ladder_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.show_50_chars:
+                this.amountOfChars = 50;
+                restartLoader();
+                break;
+            case R.id.show_100_chars:
+                this.amountOfChars = 100;
+                restartLoader();
+                break;
+            case R.id.show_150_chars:
+                this.amountOfChars = 150;
+                restartLoader();
+                break;
+            case R.id.show_200_chars:
+                this.amountOfChars = 200;
+                restartLoader();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * Starting Loader.
      * Get ladder-information and display.
      */
     public void startLoader() {
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        this.progressBar.setVisibility(View.VISIBLE);
 
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        NetworkInfo networkInfo = this.connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(1, null, this);
+            this.loaderManager.initLoader(1, null, this);
+        } else {
+            this.showError("No internet-connection");
+        }
+    }
+
+    /**
+     * Restart Loader.
+     * Get ladder-informations and display.
+     */
+    public void restartLoader() {
+
+        this.emptyList.setText("");
+        this.ladderAdapter.clear();
+
+        this.progressBar.setVisibility(View.VISIBLE);
+
+        NetworkInfo networkInfo = this.connMgr.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            this.loaderManager.restartLoader(1, null, this);
         } else {
             this.showError("No internet-connection");
         }
@@ -123,16 +186,12 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
     public void setTitleAndUrl(String league) {
         switch (league) {
             case "metamorph_standard":
-                this.jsonUrl = "https://api.pathofexile.com/ladders/Metamorph?limit=50";
+                this.jsonUrl = "https://api.pathofexile.com/ladders/Metamorph";
                 this.viewTitle = "Metamorph Standard";
                 break;
             case "metamorph_hardcore":
-                this.jsonUrl = "https://api.pathofexile.com/ladders/Hardcore Metamorph?limit=50";
+                this.jsonUrl = "https://api.pathofexile.com/ladders/Hardcore Metamorph";
                 this.viewTitle = "Metamorph Hardcore";
-                break;
-            default:
-                this.jsonUrl = "https://api.pathofexile.com/ladders/Metamorph?limit=50";
-                this.viewTitle = "Metamorph Standard";
                 break;
         }
     }
@@ -157,7 +216,10 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public Loader<ArrayList<Ladder>> onCreateLoader(int i, Bundle bundle) {
-        return new LadderLoader(this, jsonUrl);
+        toast.setText("Loading " + this.amountOfChars + " Exiles.");
+        toast.show();
+        String url = this.jsonUrl + "?limit=" + this.amountOfChars;
+        return new LadderLoader(this, url);
     }
 
     @Override
@@ -167,9 +229,12 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
         }
 
         this.progressBar.setVisibility(View.GONE);
-        this.emptyList.setText("No players found");
+        this.emptyList.setText(getString(R.string.no_exiles_found));
 
         updateUi(ladders);
+
+        toast.setText("Exiles loaded.");
+        toast.show();
     }
 
     @Override
