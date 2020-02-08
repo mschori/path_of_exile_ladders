@@ -6,12 +6,14 @@ public class Ladder {
     private Integer rank;
     private Integer level;
     private Integer imageId;
+    private String accountName;
 
-    public Ladder(String name, Integer rank, Integer level, Integer imageId) {
+    public Ladder(String name, Integer rank, Integer level, Integer imageId, String accountName) {
         this.name = name;
         this.rank = rank;
         this.level = level;
         this.imageId = imageId;
+        this.accountName = accountName;
     }
 
     public String getName() {
@@ -28,5 +30,9 @@ public class Ladder {
 
     public Integer getImageId() {
         return imageId;
+    }
+
+    public String getAccountName() {
+        return accountName;
     }
 }
