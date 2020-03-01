@@ -10,7 +10,51 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@android:color/holo_blue_dark">
+        android:background="#757575">
+
+        <TextView
+            android:id="@+id/delirium_standard"
+            style="@style/LeagueStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/delirium_standard_string" />
+
+        <ImageView
+            android:id="@+id/delirium_standard_arrow"
+            style="@style/ArrowStyle"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/image_description_goArrow"
+            app:srcCompat="@drawable/arrow_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@android:color/background_dark">
+
+        <TextView
+            android:id="@+id/delirium_hardcore"
+            style="@style/LeagueStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/delirium_hardcore_string" />
+
+        <ImageView
+            android:id="@+id/delirium_hardcore_arrow"
+            style="@style/ArrowStyle"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/image_description_goArrow"
+            app:srcCompat="@drawable/arrow_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#24b35a">
 
         <TextView
             android:id="@+id/metamorph_standard"
@@ -32,7 +76,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@android:color/holo_red_dark">
+        android:background="#156935">
 
         <TextView
             android:id="@+id/metamorph_hardcore"

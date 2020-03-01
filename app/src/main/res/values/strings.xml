@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Path of Exile Ladders</string>
+    <string name="delirium_hardcore_string">Delirium Hardcore</string>
+    <string name="delirium_standard_string">Delirium Standard</string>
     <string name="metamorph_hardcore_string">Metamorph Hardcore</string>
     <string name="metamorph_standard_string">Metamorph Standard</string>
     <string name="image_description_iconName">Icon-Name</string>
