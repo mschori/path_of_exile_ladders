@@ -208,6 +208,14 @@ public class LadderActivity extends AppCompatActivity implements LoaderManager.L
                 this.jsonUrl = "https://api.pathofexile.com/ladders/Hardcore Metamorph";
                 this.viewTitle = "Metamorph Hardcore";
                 break;
+            case "delirium_standard":
+                this.jsonUrl = "https://api.pathofexile.com/ladders/Delirium";
+                this.viewTitle = "Delirium Standard";
+                break;
+            case "delirium_hardcore":
+                this.jsonUrl = "https://api.pathofexile.com/ladders/Hardcore Delirium";
+                this.viewTitle = "Delirium Hardcore";
+                break;
         }
     }
 

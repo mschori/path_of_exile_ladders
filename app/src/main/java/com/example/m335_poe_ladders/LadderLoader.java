@@ -42,7 +42,7 @@ public class LadderLoader extends AsyncTaskLoader<ArrayList<Ladder>> {
                 return null;
             }
         } catch (IOException e) {
-            Log.e("DoInBackground", "Problem parsing the earthquake JSON results", e);
+            Log.e("DoInBackground", "Problem parsing the poe JSON results", e);
         }
 
         // Return to onPostExecute with generated earthquake-list
